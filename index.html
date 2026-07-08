@@ -2,948 +2,1599 @@
 <html lang="en">
 
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>The Lost Golden Feather | TrustaFiesta Kids</title>
-
     <meta name="description"
-        content="Join Jocky and his friends on a magical adventure through the Whispering Forest. Read the free preview before buying the full comic book.">
-
-    <link rel="icon" href="assets/icons/favicon.png">
-
+        content="Join Jocky and his friends on a magical adventure through the Whispering Forest." />
+    <link rel="icon" href="assets/icons/favicon.png" />
     <!-- Google Fonts -->
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap"
-        rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
     <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <!-- Page Flip CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/page-flip/dist/css/page-flip.css" />
+    <style>
+        /* ===== ROOT ===== */
+        :root {
+            --primary: #F7B731;
+            --secondary: #0B6B4A;
+            --dark: #0E2A25;
+            --light: #FFFDF7;
+            --text: #F5F5F5;
+            --black: #1A1A1A;
+            --gray: #d8d8d8;
+            --gradient: linear-gradient(135deg, #0E3D2F, #145A45, #0B6B4A);
+            --shadow: 0 15px 40px rgba(0, 0, 0, .25);
+            --radius: 18px;
+        }
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- CSS -->
+        html {
+            scroll-behavior: smooth;
+        }
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: #071b17;
+            color: white;
+            overflow-x: hidden;
+        }
 
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        /* ===== BACKGROUND ===== */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at top, #205f48 0%, transparent 60%), url("../assets/images/forest-bg.jpg");
+            background-size: cover;
+            background-position: center;
+            z-index: -3;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 0;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 70px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 45px;
+        }
+
+        .logo span {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            font-weight: 500;
+            font-size: 15px;
+            transition: .3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .btn-coming-soon {
+            background: #ffb72b;
+            color: #1f1f1f;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: default;
+        }
+
+        .btn-coming-soon:hover {
+            transform: none;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(.7) blur(2px);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(5, 18, 12, .60), rgba(5, 18, 12, .70));
+            z-index: 1;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-left {
+            order: 1;
+        }
+
+        .hero-right {
+            order: 2;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 10px 18px;
+            background: rgba(255, 255, 255, .10);
+            border: 1px solid rgba(255, 255, 255, .20);
+            border-radius: 50px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(8px);
+            font-size: 14px;
+        }
+
+        .hero h1 {
+            font-size: 62px;
+            line-height: 1.05;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #ececec;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: .35s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #111;
+        }
+
+        .btn-secondary {
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+        }
+
+        .hero-features {
+            display: flex;
+            gap: 25px;
+            color: #FFD35E;
+            flex-wrap: wrap;
+        }
+
+        .book-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .book-cover {
+            width: 340px;
+            animation: floatBook 5s ease-in-out infinite;
+            filter: drop-shadow(0 30px 50px rgba(0, 0, 0, .45));
+        }
+
+        .glow {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: #FFD35E;
+            filter: blur(130px);
+            opacity: .25;
+            z-index: -1;
+        }
+
+        @keyframes floatBook {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-16px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 26px;
+            height: 42px;
+            border: 2px solid white;
+            border-radius: 50px;
+            position: relative;
+        }
+
+        .scroll-indicator span::before {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 8px;
+            border-radius: 50%;
+            animation: scroll 1.8s infinite;
+        }
+
+        @keyframes scroll {
+            0% {
+                opacity: 1;
+                top: 8px;
+            }
+
+            100% {
+                opacity: 0;
+                top: 28px;
+            }
+        }
+
+        /* ===== ABOUT ===== */
+        .about-book {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title span {
+            color: var(--primary);
+            letter-spacing: 3px;
+            font-size: 14px;
+        }
+
+        .section-title h2 {
+            font-size: 44px;
+            margin-top: 12px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-image img {
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .about-content h3 {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .about-content p {
+            line-height: 1.9;
+            margin-bottom: 18px;
+            color: #f0f0f0;
+        }
+
+        .about-content ul {
+            margin: 30px 0;
+        }
+
+        .about-content li {
+            margin-bottom: 14px;
+            color: #FFD35E;
+        }
+
+        /* ===== CHARACTERS ===== */
+        .characters {
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .character-card {
+            background: rgba(255, 255, 255, .08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 20px;
+            padding: 25px 15px;
+            text-align: center;
+            transition: .35s ease;
+        }
+
+        .character-card:hover {
+            transform: translateY(-8px);
+            border-color: #F7B731;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .35);
+        }
+
+        .character-image {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background: #ffffff;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #F7B731;
+        }
+
+        .character-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: .4s;
+        }
+
+        .character-card:hover .character-image img {
+            transform: scale(1.06);
+        }
+
+        .character-card h3 {
+            font-size: 24px;
+            color: #F7B731;
+            margin-bottom: 10px;
+        }
+
+        .character-card p {
+            color: #e8e8e8;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .villain {
+            border: 2px solid #ff5c5c;
+        }
+
+        .villain .character-image {
+            border-color: #ff5c5c;
+        }
+
+        .villain h3 {
+            color: #ff7b7b;
+        }
+
+        /* ===== DEMO / BOOK SECTION ===== */
+        .demo-section {
+            padding: 100px 0;
+        }
+
+        .book-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        /* DESKTOP default – fixed size */
+        #book {
+            width: 600px;
+            height: 776px;
+            box-shadow: 0 40px 70px rgba(0, 0, 0, .35);
+            max-width: 100%;
+        }
+
+        .page {
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .page img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hard {
+            background: #ffffff;
+        }
+
+        /* Lock page inside book */
+        .lock-page {
+            position: relative;
+            background: linear-gradient(135deg, #163b2d, #244e3d);
+            color: white;
+            overflow: hidden;
+        }
+
+        .forest-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(5, 20, 15, .65), rgba(5, 20, 15, .88));
+        }
+
+        .lock-content {
+            position: relative;
+            z-index: 5;
+            width: 90%;
+            max-width: 700px;
+            margin: auto;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .bonus-badge {
+            display: inline-block;
+            background: #FFD54F;
+            color: #222;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .lock-content h2 {
+            font-size: 32px;
+            margin-bottom: 14px;
+            color: #FFD54F;
+        }
+
+        .subtitle {
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .challenge-box {
+            position: relative;
+            height: 180px;
+            border: 3px dashed rgba(255, 255, 255, .25);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, .05);
+            overflow: hidden;
+        }
+
+        .magic-gate {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .45);
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            border: 4px solid #FFD54F;
+        }
+
+        .magic-gate span {
+            font-size: 16px;
+            margin-top: 6px;
+        }
+
+        .feather {
+            position: absolute;
+            font-size: 34px;
+            animation: floatFeather 4s ease-in-out infinite;
+        }
+
+        .feather1 {
+            left: 6%;
+            top: 18%;
+        }
+
+        .feather2 {
+            right: 6%;
+            top: 12%;
+        }
+
+        .feather3 {
+            left: 14%;
+            bottom: 15%;
+        }
+
+        .feather4 {
+            right: 14%;
+            bottom: 20%;
+        }
+
+        .feather5 {
+            left: 50%;
+            top: 6%;
+            transform: translateX(-50%);
+        }
+
+        @keyframes floatFeather {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .unlock-box {
+            background: rgba(255, 255, 255, .08);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+
+        .unlock-box h3 {
+            color: #FFD54F;
+            margin-bottom: 14px;
+            font-size: 22px;
+        }
+
+        .unlock-box li {
+            margin: 10px 0;
+            font-size: 17px;
+        }
+
+        .unlock-btn {
+            display: inline-block;
+            background: #FFD54F;
+            color: #222;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            transition: .35s;
+        }
+
+        .unlock-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 35px rgba(255, 213, 79, .35);
+        }
+
+        /* ===== LOCKED SECTION (bottom) ===== */
+        .locked {
+            position: relative;
+            padding: 100px 20px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #0b241d, #123d2d, #0b241d);
+        }
+
+        .magic-stars {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(#FFD54F 1px, transparent 1px);
+            background-size: 35px 35px;
+            opacity: .18;
+            animation: starsMove 25s linear infinite;
+        }
+
+        @keyframes starsMove {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 0 800px;
+            }
+        }
+
+        .lock-card {
+            position: relative;
+            max-width: 900px;
+            margin: auto;
+            background: rgba(255, 255, 255, .08);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, .15);
+            border-radius: 30px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, .4);
+        }
+
+        .lock-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        .bonus-tag {
+            display: inline-block;
+            background: #FFD54F;
+            color: #222;
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .lock-card h2 {
+            font-size: 42px;
+            color: #FFD54F;
+            margin-bottom: 20px;
+        }
+
+        .intro {
+            max-width: 700px;
+            margin: auto;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #f2f2f2;
+        }
+
+        .challenge-box-inner {
+            margin-top: 40px;
+            background: rgba(255, 255, 255, .05);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .challenge-box-inner h3 {
+            color: #FFD54F;
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .challenge-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .challenge-item {
+            background: rgba(255, 255, 255, .08);
+            padding: 16px;
+            border-radius: 15px;
+            font-size: 17px;
+            transition: .35s;
+        }
+
+        .challenge-item:hover {
+            transform: translateY(-4px);
+            background: #FFD54F;
+            color: #222;
+        }
+
+        .coming-soon-box {
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #FFD54F, #FFB400);
+            color: #222;
+        }
+
+        .coming-soon-box h3 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .coming-soon-box p {
+            font-size: 17px;
+            margin-bottom: 25px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #061813;
+            padding: 60px 0 20px;
+            border-top: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .footer-logo img {
+            width: 60px;
+            margin-bottom: 16px;
+        }
+
+        .footer-logo h2 {
+            color: #FFD54F;
+            margin-bottom: 12px;
+            font-size: 26px;
+        }
+
+        .footer-logo p {
+            color: #cfcfcf;
+            line-height: 1.8;
+            max-width: 350px;
+            font-size: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: #ffffff;
+            transition: .3s;
+            font-size: 15px;
+        }
+
+        .footer-links a:hover {
+            color: #FFD54F;
+            padding-left: 6px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social a {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFD54F;
+            font-size: 17px;
+            transition: .3s;
+        }
+
+        .footer-social a:hover {
+            background: #FFD54F;
+            color: #111;
+            transform: translateY(-4px);
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, .08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-bottom p {
+            color: #bfbfbf;
+            font-size: 14px;
+        }
+
+        .footer-bottom strong {
+            color: #FFD54F;
+        }
+
+        /* ===== PRELOADER ===== */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #08261d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999999;
+        }
+
+        .loader-content {
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin: 0 auto 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .loader-content h2 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 32px;
+        }
+
+        .loader-content p {
+            color: #FFD35E;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+
+        .progress {
+            width: 280px;
+            height: 8px;
+            background: rgba(255, 255, 255, .15);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: auto;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #FFD35E;
+            animation: loading 3s linear forwards;
+        }
+
+        @keyframes loading {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.06);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* ============================================================
+       RESPONSIVE – BOOK RETAINS DESKTOP STYLE, MOBILE ADAPTIVE
+    ============================================================ */
+
+        /* Tablet and smaller: book becomes fluid but keeps aspect ratio */
+        @media (max-width: 900px) {
+            #book {
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 600 / 776;
+                max-width: 600px;
+            }
+
+            .book-container {
+                padding: 0 10px;
+            }
+
+            /* PageFlip container */
+            .st-page-flip {
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 600 / 776;
+            }
+
+            .st-page-flip .st-page {
+                width: 100% !important;
+                height: 100% !important;
+            }
+
+            .page img {
+                object-fit: contain;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Small phones: tighter spacing */
+        @media (max-width: 600px) {
+            header .container {
+                min-height: 60px;
+            }
+
+            .logo img {
+                width: 38px;
+            }
+
+            .logo span {
+                font-size: 16px;
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 13px;
+            }
+
+            .btn-coming-soon {
+                padding: 6px 14px;
+                font-size: 12px;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding-top: 80px;
+                text-align: center;
+            }
+
+            .hero-left {
+                order: 2;
+            }
+
+            .hero-right {
+                order: 1;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+                padding: 14px 20px;
+            }
+
+            .hero-features {
+                justify-content: center;
+                font-size: 14px;
+                gap: 14px;
+            }
+
+            .book-cover {
+                width: 220px;
+            }
+
+            .glow {
+                width: 240px;
+                height: 240px;
+                filter: blur(100px);
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .about-content ul {
+                padding: 0;
+            }
+
+            .section-title h2 {
+                font-size: 30px;
+            }
+
+            .character-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .character-image {
+                width: 110px;
+                height: 110px;
+            }
+
+            .character-card h3 {
+                font-size: 20px;
+            }
+
+            /* book container already fluid from above */
+            .book-container {
+                padding: 0 4px;
+                margin-top: 20px;
+            }
+
+            #book {
+                max-width: 100%;
+            }
+
+            /* lock page inside book */
+            .lock-content {
+                padding: 16px 10px;
+            }
+
+            .lock-content h2 {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 15px;
+            }
+
+            .magic-gate {
+                width: 100px;
+                height: 100px;
+                font-size: 32px;
+            }
+
+            .magic-gate span {
+                font-size: 13px;
+            }
+
+            .feather {
+                font-size: 26px;
+            }
+
+            .unlock-box li {
+                font-size: 15px;
+            }
+
+            .unlock-btn {
+                padding: 12px 24px;
+                font-size: 17px;
+            }
+
+            .lock-card {
+                padding: 30px 16px;
+            }
+
+            .lock-card h2 {
+                font-size: 30px;
+            }
+
+            .challenge-list {
+                grid-template-columns: 1fr;
+            }
+
+            .challenge-item {
+                font-size: 15px;
+                padding: 14px;
+            }
+
+            .coming-soon-box h3 {
+                font-size: 24px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-logo p {
+                margin: 0 auto;
+            }
+
+            .footer-links {
+                align-items: center;
+            }
+
+            .footer-social {
+                justify-content: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .badge {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            .character-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .character-image {
+                width: 90px;
+                height: 90px;
+            }
+
+            .character-card {
+                padding: 16px 10px;
+            }
+
+            .character-card h3 {
+                font-size: 17px;
+            }
+
+            .lock-content h2 {
+                font-size: 20px;
+            }
+
+            .magic-gate {
+                width: 80px;
+                height: 80px;
+                font-size: 26px;
+            }
+
+            .feather {
+                font-size: 20px;
+            }
+        }
+
+        /* Desktop overrides: ensure fixed size */
+        @media (min-width: 901px) {
+            #book {
+                width: 600px !important;
+                height: 776px !important;
+            }
+
+            .st-page-flip {
+                width: 600px !important;
+                height: 776px !important;
+            }
+
+            .st-page-flip .st-page {
+                width: 600px !important;
+                height: 776px !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- ===========================
-        PRELOADER
-    =============================-->
-
-    <!-- PRELOADER -->
-
+    <!-- ===== PRELOADER ===== -->
     <div id="preloader">
-
         <div class="loader-content">
-
-            <img src="assets/icons/logo.png" class="loader-logo">
-
+            <img src="assets/icons/logo.png" class="loader-logo" alt="logo" />
             <h2>TrustaFiesta Kids</h2>
-
             <p>Loading Your Adventure...</p>
-
             <div class="progress">
-
                 <div class="progress-bar"></div>
-
             </div>
-
         </div>
-
     </div>
 
-    <!-- ===========================
-        FLOATING PARTICLES
-    =============================-->
-
-    <div class="particles"></div>
-
-    <!-- ===========================
-        HEADER
-    =============================-->
-
+    <!-- ===== HEADER ===== -->
     <header id="header">
-
         <div class="container">
-
             <div class="logo">
-
-                <img src="assets/icons/logo.png" alt="Logo">
-
+                <img src="assets/icons/logo.png" alt="Logo" />
                 <span>TrustaFiesta Kids</span>
-
             </div>
-
             <nav>
-
                 <ul>
-
                     <li><a href="#home">Home</a></li>
-
                     <li><a href="#about">About</a></li>
-
                     <li><a href="#characters">Characters</a></li>
-
                     <li><a href="#demo">Read Demo</a></li>
-
-                    <!-- <li><a href="#buy">Buy Book</a></li> -->
-
                 </ul>
-
             </nav>
-
-            <!-- <a href="#buy" class="nav-btn">
-
-                Buy Now
-
-            </a> -->
-
-            <!-- <a href="#newsletter" class="btn btn-coming-soon">
-                🚀 Coming Soon
-            </a> -->
-
+            <a href="#newsletter" class="btn-coming-soon">🚀 Coming Soon</a>
         </div>
-
     </header>
 
-    <!-- ===========================
-        HERO SECTION
-    =============================-->
-
+    <!-- ===== HERO ===== -->
     <section class="hero" id="home">
-
         <video class="hero-video" autoplay muted loop playsinline>
-
-            <source src="assets/videos/jocky-intro.mp4" type="video/mp4">
-
+            <source src="assets/videos/jocky-intro.mp4" type="video/mp4" />
         </video>
-
         <div class="hero-overlay"></div>
-
         <div class="container hero-container">
-
-            <!-- LEFT -->
-
             <div class="hero-left">
-
-                <span class="badge">
-
-                    ✨ TrustaFiesta Kids Presents
-
-                </span>
-
-                <h1>
-
-                    The Lost
-                    <span>Golden Feather</span>
-
-                </h1>
-
-                <p>
-
-                    Join Jocky, Jenny, Bun, Tommy and Lilly on an unforgettable journey through the magical
-                    Whispering Forest.
-
-                    Filled with friendship, kindness,
-                    mystery and adventure...
-
-                    this beautifully illustrated comic book is perfect for young explorers.
-
-                </p>
-
+                <span class="badge">✨ TrustaFiesta Kids Presents</span>
+                <h1>The Lost <span>Golden Feather</span></h1>
+                <p>Join Jocky, Jenny, Bun, Tommy and Lilly on an unforgettable journey through the magical Whispering
+                    Forest. Filled with friendship, kindness, mystery and adventure... this beautifully illustrated
+                    comic book is perfect for young explorers.</p>
                 <div class="hero-buttons">
-
-                    <a href="#demo" class="btn btn-primary">
-
-                        <i class="fa-solid fa-book-open"></i>
-
-                        Read Free Demo
-
-                    </a>
-
-                    <!-- <a href="#buy" class="btn btn-secondary">
-
-                        <i class="fa-solid fa-cart-shopping"></i>
-
-                        Buy Full Book
-
-                    </a> -->
-                    <a href="#newsletter" class="btn btn-coming-soon">
-                        🚀 Coming Soon
-                    </a>
+                    <a href="#demo" class="btn btn-primary"><i class="fa-solid fa-book-open"></i> Read Free Demo</a>
+                    <a href="#newsletter" class="btn btn-coming-soon">🚀 Coming Soon</a>
                 </div>
-
                 <div class="hero-features">
-
-                    <div>
-
-                        ⭐ 10 Story Pages
-
-                    </div>
-
-                    <div>
-
-                        🎨 Coloring Pages
-
-                    </div>
-
-                    <div>
-
-                        📥 Instant Download
-
-                    </div>
-
+                    <div>⭐ 10 Story Pages</div>
+                    <div>🎨 Coloring Pages</div>
+                    <div>📥 Instant Download</div>
                 </div>
-
             </div>
-
-            <!-- RIGHT -->
-
             <div class="hero-right">
-
                 <div class="book-wrapper">
-
-                    <img src="assets/books/cover.png" class="book-cover" alt="Book Cover">
-
+                    <img src="assets/books/cover.png" class="book-cover" alt="Book Cover" />
                     <div class="glow"></div>
-
                 </div>
-
             </div>
-
         </div>
-
-        <!-- Scroll Down -->
-
-        <div class="scroll-indicator">
-
-            <span></span>
-
-        </div>
-
+        <div class="scroll-indicator"><span></span></div>
     </section>
 
-    <!-- ===========================
-        ABOUT BOOK
-    =============================-->
-
+    <!-- ===== ABOUT ===== -->
     <section class="about-book" id="about">
-
         <div class="container">
-
             <div class="section-title">
-
-                <span>
-
-                    ABOUT THE BOOK
-
-                </span>
-
-                <h2>
-
-                    Every Great Adventure
-                    Begins With
-                    One Feather...
-
-                </h2>
-
+                <span>ABOUT THE BOOK</span>
+                <h2>Every Great Adventure Begins With One Feather...</h2>
             </div>
-
             <div class="about-grid">
-
-                <div class="about-image">
-
-                    <img src="assets/images/about-book.png" alt="About Book">
-
-                </div>
-
+                <div class="about-image"><img src="assets/images/about-book.png" alt="About Book" /></div>
                 <div class="about-content">
-
-                    <h3>
-
-                        Discover a Magical World
-
-                    </h3>
-
-                    <p>
-
-                        Deep inside the Whispering Forest,
-                        Jocky discovers a mysterious glowing golden feather.
-
-                        Little does he know...
-
-                        it belongs to Aurora,
-                        the legendary Golden Bird who protects the happiness of the forest.
-
-                    </p>
-
-                    <p>
-
-                        Together with his friends,
-                        Jocky follows magical clues,
-                        solves ancient riddles,
-                        crosses broken bridges,
-                        and uncovers secrets hidden deep within enchanted caves.
-
-                    </p>
-
+                    <h3>Discover a Magical World</h3>
+                    <p>Deep inside the Whispering Forest, Jocky discovers a mysterious glowing golden feather. Little
+                        does he know... it belongs to Aurora, the legendary Golden Bird who protects the happiness of
+                        the forest.</p>
+                    <p>Together with his friends, Jocky follows magical clues, solves ancient riddles, crosses broken
+                        bridges, and uncovers secrets hidden deep within enchanted caves.</p>
                     <ul>
-
-                        <li>
-
-                            ✔ Beautiful Full Color Illustrations
-
-                        </li>
-
-                        <li>
-
-                            ✔ Fun Storytelling
-
-                        </li>
-
-                        <li>
-
-                            ✔ Positive Life Lessons
-
-                        </li>
-
-                        <li>
-
-                            ✔ Perfect For Ages 4–10
-
-                        </li>
-
-                        <li>
-
-                            ✔ Family Friendly Adventure
-
-                        </li>
-
+                        <li>✔ Beautiful Full Color Illustrations</li>
+                        <li>✔ Fun Storytelling</li>
+                        <li>✔ Positive Life Lessons</li>
+                        <li>✔ Perfect For Ages 4–10</li>
+                        <li>✔ Family Friendly Adventure</li>
                     </ul>
-
-                    <a href="#demo" class="btn btn-primary">
-
-                        Start Reading
-
-                    </a>
-
+                    <a href="#demo" class="btn btn-primary">Start Reading</a>
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
-    <!-- ===========================
-        NEXT SECTION PLACEHOLDER
-    =============================-->
-
-
+    <!-- ===== CHARACTERS ===== -->
     <section class="characters" id="characters">
-
         <div class="container">
-
             <div class="section-title">
-
                 <span>MEET THE FRIENDS</span>
-
-                <h2>
-                    Every Great Adventure
-                    Needs Great Friends
-                </h2>
-
-                <p>
-
-                    Meet the brave little explorers of the Whispering Forest.
-
-                </p>
-
+                <h2>Every Great Adventure Needs Great Friends</h2>
+                <p>Meet the brave little explorers of the Whispering Forest.</p>
             </div>
-
             <div class="character-grid">
-
-                <!-- Jocky -->
-
                 <div class="character-card">
-
-                    <div class="character-image">
-
-                        <img src="assets/images/jocky.png" alt="Jocky">
-
-                    </div>
-
+                    <div class="character-image"><img src="assets/images/jocky.png" alt="Jocky" /></div>
                     <h3>Jocky</h3>
-
-                    <p>
-
-                        A brave rabbit who always chooses kindness before courage.
-
-                    </p>
-
+                    <p>A brave rabbit who always chooses kindness before courage.</p>
                 </div>
-
-                <!-- Jenny -->
-
                 <div class="character-card">
-
-                    <div class="character-image">
-
-                        <img src="assets/images/jenny.png" alt="Jenny">
-
-                    </div>
-
+                    <div class="character-image"><img src="assets/images/jenny.png" alt="Jenny" /></div>
                     <h3>Jenny</h3>
-
-                    <p>
-
-                        Jocky's cheerful little sister who never gives up.
-
-                    </p>
-
+                    <p>Jocky's cheerful little sister who never gives up.</p>
                 </div>
-
-                <!-- Bun -->
-
                 <div class="character-card">
-
-                    <div class="character-image">
-
-                        <img src="assets/images/bun.png" alt="Bun">
-
-                    </div>
-
+                    <div class="character-image"><img src="assets/images/bun.png" alt="Bun" /></div>
                     <h3>Bun</h3>
-
-                    <p>
-
-                        A clever squirrel who always thinks before acting.
-
-                    </p>
-
+                    <p>A clever squirrel who always thinks before acting.</p>
                 </div>
-
-                <!-- Tommy -->
-
                 <div class="character-card">
-
-                    <div class="character-image">
-
-                        <img src="assets/images/tommy.png" alt="Tommy">
-
-                    </div>
-
+                    <div class="character-image"><img src="assets/images/tommy.png" alt="Tommy" /></div>
                     <h3>Tommy</h3>
-
-                    <p>
-
-                        Curious, funny and always asking the right questions.
-
-                    </p>
-
+                    <p>Curious, funny and always asking the right questions.</p>
                 </div>
-
-                <!-- Lilly -->
-
                 <div class="character-card">
-
-                    <div class="character-image">
-
-                        <img src="assets/images/lilly.png" alt="Lilly">
-
-                    </div>
-
+                    <div class="character-image"><img src="assets/images/lilly.png" alt="Lilly" /></div>
                     <h3>Lilly</h3>
-
-                    <p>
-
-                        A tiny blue bird who guides everyone with her songs.
-
-                    </p>
-
+                    <p>A tiny blue bird who guides everyone with her songs.</p>
                 </div>
-
-                <!-- Professor Sunny -->
-
                 <div class="character-card">
-
-                    <div class="character-image">
-
-                        <img src="assets/images/professor-sunny.png" alt="Professor Sunny">
-
+                    <div class="character-image"><img src="assets/images/professor-sunny.png" alt="Professor Sunny" />
                     </div>
-
                     <h3>Professor Sunny</h3>
-
-                    <p>
-
-                        The wisest owl in the forest and keeper of ancient secrets.
-
-                    </p>
-
+                    <p>The wisest owl in the forest and keeper of ancient secrets.</p>
                 </div>
-
-                <!-- Rusty -->
-
                 <div class="character-card villain">
-
-                    <div class="character-image">
-
-                        <img src="assets/images/rusty.png" alt="Rusty">
-
-                    </div>
-
+                    <div class="character-image"><img src="assets/images/rusty.png" alt="Rusty" /></div>
                     <h3>Rusty</h3>
-
-                    <p>
-
-                        A clever fox who dreams of finding Aurora before anyone else.
-
-                    </p>
-
+                    <p>A clever fox who dreams of finding Aurora before anyone else.</p>
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
-    <!-- ======================================
-FREE DEMO
-=======================================-->
-
+    <!-- ===== DEMO / BOOK READER ===== -->
     <section class="demo-section" id="demo">
-
         <div class="container">
-
             <div class="section-title">
-
                 <span>FREE PREVIEW</span>
-
                 <h2>Read The First Pages</h2>
-
-                <p>
-
-                    Open the book and enjoy the beginning
-                    of Jocky's magical adventure.
-
-                </p>
-
+                <p>Open the book and enjoy the beginning of Jocky's magical adventure.</p>
             </div>
-
             <div class="book-container">
-
                 <div id="book">
-
-                    <!-- FRONT COVER -->
-
-                    <div class="page hard">
-
-                        <img src="assets/books/cover.png">
-
-                    </div>
-
-                    <!-- INSIDE COVER -->
-
-                    <div class="page">
-
-                        <img src="assets/books/Inside Front Cover.png">
-
-                    </div>
-                    <div class="page">
-
-                        <img src="assets/books/Title Page.png">
-
-                    </div>
-
-                    <div class="page">
-
-                        <img src="assets/books/This Book Belongs To.png">
-
-                    </div>
-
-                    <div class="page">
-
-                        <img src="assets/books/About the Author.png">
-
-                    </div>
-
-                    <div class="page">
-
-                        <img src="assets/books/Copyright Page.png">
-
-                    </div>
-
-                    <!-- STORY -->
-
-                    <!-- STORY PAGE 1 -->
-
-                    <div class="page">
-                        <img src="assets/books/page1.png">
-                    </div>
-
-                    <!-- COLORING PAGE 1 -->
-
-                    <div class="page">
-                        <img src="assets/books/first color page.png">
-                    </div>
-
-                    <!-- STORY PAGE 2 -->
-
-                    <div class="page">
-                        <img src="assets/books/page2.png">
-                    </div>
-
-                    <!-- ACTIVITY PAGE 2 -->
-
-                    <div class="page">
-                        <img src="assets/books/second color page.png">
-                    </div>
-
-                    <!-- STORY PAGE 3 -->
-
-                    <div class="page">
-                        <img src="assets/books/page3.png">
-                    </div>
-
-                    <!-- ACTIVITY PAGE 3 -->
-
-                    <div class="page">
-                        <img src="assets/books/third color page.png">
-                    </div>
-
-                    <!-- STORY PAGE 4 -->
-
-                    <div class="page">
-                        <img src="assets/books/page4.png">
-                    </div>
-
-                    <!-- ACTIVITY PAGE 4 -->
-
-                    <div class="page">
-                        <img src="assets/books/fourth color page.png">
-                    </div>
-
+                    <!-- pages -->
+                    <div class="page hard"><img src="assets/books/cover.png" alt="cover" /></div>
+                    <div class="page"><img src="assets/books/Inside Front Cover.png" alt="inside cover" /></div>
+                    <div class="page"><img src="assets/books/Title Page.png" alt="title" /></div>
+                    <div class="page"><img src="assets/books/This Book Belongs To.png" alt="belongs" /></div>
+                    <div class="page"><img src="assets/books/About the Author.png" alt="author" /></div>
+                    <div class="page"><img src="assets/books/Copyright Page.png" alt="copyright" /></div>
+                    <div class="page"><img src="assets/books/page1.png" alt="page1" /></div>
+                    <div class="page"><img src="assets/books/first color page.png" alt="color1" /></div>
+                    <div class="page"><img src="assets/books/page2.png" alt="page2" /></div>
+                    <div class="page"><img src="assets/books/second color page.png" alt="color2" /></div>
+                    <div class="page"><img src="assets/books/page3.png" alt="page3" /></div>
+                    <div class="page"><img src="assets/books/third color page.png" alt="color3" /></div>
+                    <div class="page"><img src="assets/books/page4.png" alt="page4" /></div>
+                    <div class="page"><img src="assets/books/fourth color page.png" alt="color4" /></div>
                     <!-- LOCK PAGE -->
-
-                    <!-- LOCKED BONUS ACTIVITY PAGE -->
-
                     <div class="page lock-page">
-
-                        <div class="lock-background">
-
-                            <div class="forest-overlay"></div>
-
-                            <div class="lock-content">
-
-                                <div class="bonus-badge">
-
-                                    🌟 BONUS CHALLENGE 🌟
-
-                                </div>
-
-                                <h2>
-
-                                    Can You Help Jocky
-                                    Find Aurora?
-
-                                </h2>
-
-                                <p class="subtitle">
-
-                                    The magical forest is filled with
-                                    hidden golden feathers.
-
-                                    But a mysterious magic barrier
-                                    blocks the way...
-
-                                </p>
-
-                                <div class="challenge-box">
-
-                                    <div class="feather feather1">🪶</div>
-                                    <div class="feather feather2">🪶</div>
-                                    <div class="feather feather3">🪶</div>
-                                    <div class="feather feather4">🪶</div>
-                                    <div class="feather feather5">🪶</div>
-
-                                    <div class="magic-gate">
-
-                                        🔒
-
-                                        <span>Magic Barrier</span>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="unlock-box">
-
-                                    <h3>
-
-                                        Continue Reading to Unlock
-
-                                    </h3>
-
-                                    <ul>
-
-                                        <li>🧩 Complete the Secret Maze</li>
-
-                                        <li>🦜 Meet Aurora the Golden Bird</li>
-
-                                        <li>🎨 Exclusive Coloring Pages</li>
-
-                                        <li>⭐ Fun Activities & Puzzles</li>
-
-                                        <li>🏆 Discover the Exciting Ending</li>
-
-                                    </ul>
-
-                                </div>
-
-                                <a href="#buy" class="unlock-btn">
-
-                                    🛒 Unlock Full Adventure
-
-                                </a>
-
+                        <div class="forest-overlay"></div>
+                        <div class="lock-content">
+                            <div class="bonus-badge">🌟 BONUS CHALLENGE 🌟</div>
+                            <h2>Can You Help Jocky Find Aurora?</h2>
+                            <p class="subtitle">The magical forest is filled with hidden golden feathers. But a
+                                mysterious magic barrier blocks the way...</p>
+                            <div class="challenge-box">
+                                <div class="feather feather1">🪶</div>
+                                <div class="feather feather2">🪶</div>
+                                <div class="feather feather3">🪶</div>
+                                <div class="feather feather4">🪶</div>
+                                <div class="feather feather5">🪶</div>
+                                <div class="magic-gate">🔒<span>Magic Barrier</span></div>
                             </div>
-
+                            <div class="unlock-box">
+                                <h3>Continue Reading to Unlock</h3>
+                                <ul>
+                                    <li>🧩 Complete the Secret Maze</li>
+                                    <li>🦜 Meet Aurora the Golden Bird</li>
+                                    <li>🎨 Exclusive Coloring Pages</li>
+                                    <li>⭐ Fun Activities & Puzzles</li>
+                                    <li>🏆 Discover the Exciting Ending</li>
+                                </ul>
+                            </div>
+                            <a href="#buy" class="unlock-btn">🛒 Unlock Full Adventure</a>
                         </div>
-
                     </div>
-                    <!-- BACK COVER -->
-
-                    <div class="page hard">
-
-                        <img src="assets/books/back-cover.png">
-
-                    </div>
-
+                    <div class="page hard"><img src="assets/books/back-cover.png" alt="back cover" /></div>
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
-    <!-- ======================================
-CLIFFHANGER
-=======================================-->
-
-    <!--=========================================
-MAGICAL LOCKED SECTION
-==========================================-->
-
+    <!-- ===== LOCKED SECTION (bottom) ===== -->
     <section class="locked" id="buy">
-
         <div class="magic-stars"></div>
-
         <div class="container">
-
             <div class="lock-card">
-
-                <div class="lock-icon">
-
-                    🔒
-
-                </div>
-
-                <span class="bonus-tag">
-
-                    ✨ BONUS CHALLENGE ✨
-
-                </span>
-
-                <h2>
-
-                    The Adventure Isn't Over Yet...
-
-                </h2>
-
-                <p class="intro">
-
-                    Jocky is almost ready to discover
-                    Aurora's greatest secret...
-
-                    But the magical gate only opens
-                    for true adventurers.
-
-                </p>
-
-                <div class="challenge-box">
-
-                    <h3>
-
-                        Continue Reading to Unlock
-
-                    </h3>
-
+                <div class="lock-icon">🔒</div>
+                <span class="bonus-tag">✨ BONUS CHALLENGE ✨</span>
+                <h2>The Adventure Isn't Over Yet...</h2>
+                <p class="intro">Jocky is almost ready to discover Aurora's greatest secret... But the magical gate only
+                    opens for true adventurers.</p>
+                <div class="challenge-box-inner">
+                    <h3>Continue Reading to Unlock</h3>
                     <div class="challenge-list">
-
-                        <div class="challenge-item">
-
-                            🪶 Meet Aurora, the Golden Bird
-
-                        </div>
-
-                        <div class="challenge-item">
-
-                            🧩 Exciting Puzzles & Brain Games
-
-                        </div>
-
-                        <div class="challenge-item">
-
-                            🎨 Beautiful Coloring Pages
-
-                        </div>
-
-                        <div class="challenge-item">
-
-                            📖 Continue Jocky's Adventure
-
-                        </div>
-
-                        <div class="challenge-item">
-
-                            ⭐ Fun Activities for Kids
-
-                        </div>
-
-                        <div class="challenge-item">
-
-                            🎁 Bonus Surprise Pages
-
-                        </div>
-
+                        <div class="challenge-item">🪶 Meet Aurora, the Golden Bird</div>
+                        <div class="challenge-item">🧩 Exciting Puzzles & Brain Games</div>
+                        <div class="challenge-item">🎨 Beautiful Coloring Pages</div>
+                        <div class="challenge-item">📖 Continue Jocky's Adventure</div>
+                        <div class="challenge-item">⭐ Fun Activities for Kids</div>
+                        <div class="challenge-item">🎁 Bonus Surprise Pages</div>
                     </div>
-
                 </div>
-
                 <div class="coming-soon-box">
-
-                    <h3>
-
-                        🚀 Series 1 Launching Soon!
-
-                    </h3>
-
-                    <p>
-
-                        Be one of the first explorers
-                        to join Jocky on this magical adventure.
-
-                    </p>
-
-                    <a href="#" class="unlock-btn">
-
-                        📚 Coming Soon
-
-                    </a>
-
+                    <h3>🚀 Series 1 Launching Soon!</h3>
+                    <p>Be one of the first explorers to join Jocky on this magical adventure.</p>
+                    <a href="#" class="unlock-btn">📚 Coming Soon</a>
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
-
-    <!--=========================================
-FOOTER
-==========================================-->
-
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
-
         <div class="container">
-
             <div class="footer-content">
-
                 <div class="footer-logo">
-
-                    <img src="assets/icons/logo.png" alt="TrustaFiesta Kids">
-
+                    <img src="assets/icons/logo.png" alt="TrustaFiesta Kids" />
                     <h2>TrustaFiesta Kids</h2>
-
-                    <p>
-                        Inspiring imagination through magical stories,
-                        fun activities, puzzles, coloring pages, and unforgettable adventures.
-                    </p>
-
+                    <p>Inspiring imagination through magical stories, fun activities, puzzles, coloring pages, and
+                        unforgettable adventures.</p>
                 </div>
-
                 <div class="footer-links">
-
                     <a href="#home">Home</a>
-
                     <a href="#about">About</a>
-
                     <a href="#characters">Characters</a>
-
                     <a href="#demo">Read Demo</a>
-
                     <a href="#buy">Coming Soon</a>
-
                 </div>
-
                 <div class="footer-social">
-
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
-
                     <a href="#"><i class="fab fa-instagram"></i></a>
-
                     <a href="#"><i class="fab fa-youtube"></i></a>
-
                     <a href="#"><i class="fab fa-pinterest-p"></i></a>
-
                 </div>
-
             </div>
-
             <div class="footer-bottom">
-
-                <p>
-
-                    © 2026 <strong>TrustaFiesta Kids</strong>. All Rights Reserved.
-
-                </p>
-
-                <p>
-
-                    Designed & Developed by
-                    <strong>TrustaFiesta Tech</strong>
-
-                </p>
-
+                <p>© 2026 <strong>TrustaFiesta Kids</strong>. All Rights Reserved.</p>
+                <p>Designed & Developed by <strong>TrustaFiesta Tech</strong></p>
             </div>
-
         </div>
-
     </footer>
 
-    <!-- JS -->
-
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/page-flip/dist/css/page-flip.css">
-
+    <!-- ===== SCRIPTS ===== -->
     <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
+    <script>
+        (function () {
+            // Preloader
+            window.addEventListener('load', function () {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    setTimeout(function () {
+                        preloader.style.transition = 'opacity 0.8s';
+                        preloader.style.opacity = '0';
+                        setTimeout(function () {
+                            preloader.style.display = 'none';
+                        }, 800);
+                    }, 800);
+                }
+            });
 
-    <script src="js/reader.js"></script>
+            // Page Flip - preserve desktop size, adapt on mobile/tablet
+            const bookElement = document.getElementById('book');
+            if (bookElement) {
+                let pageFlip;
 
+                function initPageFlip() {
+                    let w, h;
+                    const isDesktop = window.innerWidth >= 901;
+                    if (isDesktop) {
+                        w = 600;
+                        h = 776;
+                    } else {
+                        // fluid: use container width but cap at 600
+                        const parentW = bookElement.parentElement.clientWidth || 360;
+                        const containerW = Math.min(parentW, 600);
+                        w = containerW;
+                        h = containerW * (776 / 600);
+                    }
+
+                    if (pageFlip) {
+                        pageFlip.updateSize(w, h);
+                    } else {
+                        pageFlip = new St.PageFlip(bookElement, {
+                            width: w,
+                            height: h,
+                            size: 'fixed',
+                            minWidth: 260,
+                            maxWidth: 700,
+                            minHeight: 380,
+                            maxHeight: 900,
+                            maxShadowOpacity: 0.5,
+                            showCover: true,
+                            mobileScrollSupport: true,
+                            usePortrait: true,
+                            autoSize: false
+                        });
+                        pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+                    }
+                }
+
+                // initial load
+                initPageFlip();
+
+                // debounced resize
+                let resizeTimer;
+                window.addEventListener('resize', function () {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(function () {
+                        initPageFlip();
+                    }, 250);
+                });
+            }
+        })();
+    </script>
 </body>
 
 </html>
